@@ -3,18 +3,24 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './_components/home/home.component';
-import {EmployeeModule} from './_components/employee/employee.module';
+import {EmployeeModule} from './employee/employee.module';
+import {HeaderComponent} from "./header/header.component";
+import {FooterComponent} from "./footer/footer.component";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    EmployeeModule
+    EmployeeModule,
+    RouterModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

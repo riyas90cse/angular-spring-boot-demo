@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+
+html{
+  height: 100%;
+}
+body{
+  font-family: 'Segoe UI', sans-serif;;
+  font-size: 1rem;
+}
+
+.custom-table-head {
+  background-color: #42a2b9 !important;
+  color: #ffff !important;
+}
+
+.p-tb {
+  padding-top: 7rem;
+  padding-bottom: 5rem;
+}
+
+.content-section {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  padding: 2rem;
+}
+
+.mr-30 {
+  margin-right: 30px !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
