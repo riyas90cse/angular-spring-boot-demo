@@ -3,6 +3,7 @@ import {Subject} from "rxjs";
 import {Employee} from "../../_interface/employee";
 import {EmployeeService} from "../../_services/employee.service";
 import {map} from "rxjs/operators";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-view-employee',
@@ -16,7 +17,7 @@ export class ViewEmployeeComponent implements OnDestroy, OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private router: Router, private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -31,7 +32,16 @@ export class ViewEmployeeComponent implements OnDestroy, OnInit {
   }
 
   onRoute(modify: boolean) {
-
+    this.isModify = modify;
+    if(this.isModify == true) {
+      this.router.navigate(['/employee/edit']).then(r => {
+        console.log('Navigate to Route Edit', r);
+      });
+    } else  {
+      this.router.navigate(['/employee/add']).then(r => {
+        console.log('Navigate to Route Add', r);
+      });
+    }
   }
 
   // Get Employee list
