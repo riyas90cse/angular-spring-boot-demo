@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from "rxjs";
-import {Employee} from "../../_interface/employee";
+import {IEmployee} from "../../_interface/employee";
 import {EmployeeService} from "../../_services/employee.service";
 import {map} from "rxjs/operators";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-view-employee',
@@ -13,11 +13,12 @@ import {Router} from "@angular/router";
 export class ViewEmployeeComponent implements OnDestroy, OnInit {
 
   isModify: boolean;
-  employees : Employee []
+  employees : IEmployee []
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
+  public empId = this.actRoute.snapshot.params[ 'empId' ];
 
-  constructor(private router: Router, private employeeService: EmployeeService) { }
+  constructor(private router: Router, public actRoute: ActivatedRoute, private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -31,14 +32,14 @@ export class ViewEmployeeComponent implements OnDestroy, OnInit {
     this.dtTrigger.unsubscribe();
   }
 
-  onRoute(modify: boolean) {
+  onRoute(modify: boolean, empId) {
     this.isModify = modify;
     if(this.isModify == true) {
-      this.router.navigate(['/employee/edit']).then(r => {
+      this.router.navigate([`/employee/edit/${empId}`]).then(r => {
         console.log('Navigate to Route Edit', r);
       });
     } else  {
-      this.router.navigate(['/employee/add']).then(r => {
+      this.router.navigate(['/employee/add/']).then(r => {
         console.log('Navigate to Route Add', r);
       });
     }

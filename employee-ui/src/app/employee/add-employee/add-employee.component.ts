@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {EmployeeService} from "../../_services/employee.service";
 import { Router } from '@angular/router';
+import {FormValidatiors} from "../../_services/form-validatiors";
 
 @Component({
   selector: 'app-add-employee',
@@ -10,22 +11,22 @@ import { Router } from '@angular/router';
 })
 export class AddEmployeeComponent implements OnInit {
 
-  formGroup : FormGroup
+  public formGroup : FormGroup;
 
   constructor( public fb: FormBuilder,
                private router: Router,
-               public employeeService: EmployeeService) { }
-
-  ngOnInit(): void {
+               public employeeService: EmployeeService) {
     this.formGroup = this.fb.group({
-      name: [''],
-      email: [''],
-      contactNo: [''],
+      name: ['', Validators.required ],
+      email: ['', Validators.compose([FormValidatiors.emailValidator]) ],
+      contactNo: ['', Validators.required],
       companyName: [''],
       designation: [''],
       salary: [''],
-    })
+    });
   }
+
+  ngOnInit(): void {}
 
   back() {
     window.history.back();
@@ -41,7 +42,7 @@ export class AddEmployeeComponent implements OnInit {
   createEmployee() {
     this.employeeService.create(this.formGroup.value).subscribe(response => {
       console.log('Employee Created' , response);
-      this.router.navigate(['/employee/']).then(r => {});
+      return this.router.navigate(['/employee/']).then(r => {});
     });
   }
 

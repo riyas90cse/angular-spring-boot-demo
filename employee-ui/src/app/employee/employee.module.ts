@@ -16,7 +16,7 @@ const routes: Routes = [
     path: '',
     children: [
       { path: 'add', component: AddEmployeeComponent },
-      { path : 'edit', component: EditEmployeeComponent }
+      { path : 'edit/:empId', component: EditEmployeeComponent }
     ]
   }
 ];

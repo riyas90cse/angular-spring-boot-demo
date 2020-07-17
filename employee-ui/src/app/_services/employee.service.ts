@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
-import {Employee} from "../_interface/employee";
+import {IEmployee} from "../_interface/employee";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-
-  private apiServer = "http://localhost:8080/api";
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -20,36 +19,36 @@ export class EmployeeService {
 
   constructor(private httpClient: HttpClient) { }
 
-  create(employee): Observable<Employee> {
-    return this.httpClient.post<Employee>(this.apiServer + '/employee/save', JSON.stringify(employee), this.httpOptions)
+  create(employee): Observable<IEmployee> {
+    return this.httpClient.post<IEmployee>(environment.apiUrl + '/employee/save', JSON.stringify(employee), this.httpOptions)
       .pipe(
         catchError(this.errorHandler)
       )
   }
 
-  getById(id): Observable<Employee> {
-    return this.httpClient.get<Employee>(this.apiServer + '/employee/' + id)
+  getById(empId): Observable<IEmployee> {
+    return this.httpClient.get<IEmployee>(environment.apiUrl + '/employee/' + empId)
       .pipe(
         catchError(this.errorHandler)
       )
   }
 
-  getAll(): Observable<Employee[]> {
-    return this.httpClient.get<Employee[]>(this.apiServer + '/employee/getAll')
+  getAll(): Observable<IEmployee[]> {
+    return this.httpClient.get<IEmployee[]>(environment.apiUrl + '/employee/getAll')
       .pipe(
         catchError(this.errorHandler)
       )
   }
 
-  update(id, employee): Observable<Employee> {
-    return this.httpClient.put<Employee>(this.apiServer + '/employee/update' + id, JSON.stringify(employee), this.httpOptions)
+  update(empId, employee): Observable<IEmployee> {
+    return this.httpClient.put<IEmployee>(environment.apiUrl + '/employee/update', JSON.stringify(employee), this.httpOptions)
       .pipe(
         catchError(this.errorHandler)
       )
   }
 
-  delete(id){
-    return this.httpClient.delete<Employee>(this.apiServer + '/employee/' + id, this.httpOptions)
+  delete(empId){
+    return this.httpClient.delete<IEmployee>(environment.apiUrl + '/employee/' + empId, this.httpOptions)
       .pipe(
         catchError(this.errorHandler)
       )

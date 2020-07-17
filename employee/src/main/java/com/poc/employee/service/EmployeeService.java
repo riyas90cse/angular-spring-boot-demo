@@ -47,7 +47,7 @@ public class EmployeeService implements IEmployeeService {
             if(!StringUtils.isEmpty(reqDto.getCompanyName()))
                 employee.setCompanyName(reqDto.getCompanyName());
             if(!StringUtils.isEmpty(reqDto.getDesignation()))
-                employee.setDesignation(reqDto.getCompanyName());
+                employee.setDesignation(reqDto.getDesignation());
             try {
                 if(!StringUtils.isEmpty(reqDto.getSalary())) {
                     Long salary = Long.valueOf(reqDto.getSalary());
