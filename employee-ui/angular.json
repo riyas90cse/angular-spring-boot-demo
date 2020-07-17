@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "employee-ui"
+    }
+  },
+  "defaultProject": "employee-ui",
+  "cli": {
+    "analytics": false
+  }
 }
