@@ -20,11 +20,8 @@ public class EmployeeService implements IEmployeeService {
 
     private final Logger LOG = LogManager.getLogger(EmployeeService.class);
 
-    final private EmployeeRepository repository;
-
-    public EmployeeService(@Autowired EmployeeRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private EmployeeRepository repository;
 
     @Override
     public Employee saveEmployee(Employee employee) {
@@ -59,7 +56,7 @@ public class EmployeeService implements IEmployeeService {
                     }
                 }
             } catch (Exception e) {
-              e.printStackTrace();
+              LOG.debug(e.getStackTrace());
             }
             repository.save(employee);
             return employee;

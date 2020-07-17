@@ -15,9 +15,6 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "EMPLOYEE")
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class Employee {
 
     @Id

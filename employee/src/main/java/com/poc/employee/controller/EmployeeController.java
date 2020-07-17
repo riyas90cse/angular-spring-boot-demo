@@ -34,9 +34,10 @@ public class EmployeeController extends BaseController {
     public ResponseEntity<EmployeeResDto> getEmployee(@PathVariable("empId") String id) {
         EmployeeResDto employeeResDto;
         try {
-            employeeResDto= mapper(employeeService.findEmployee(UUID.fromString(id)));
+            employeeResDto = mapper(employeeService.findEmployee(UUID.fromString(id)));
             return new ResponseEntity<>(employeeResDto, HttpStatus.OK);
         } catch (Exception e) {
+            LOG.debug(e.getStackTrace());
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
@@ -65,10 +66,9 @@ public class EmployeeController extends BaseController {
         try {
             Employee employee = employeeService.updateEmployee(addOrEditUser);
             EmployeeResDto dto = mapper(employee);
-            System.out.println(dto.toString());
             return new ResponseEntity<>(dto, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.debug(e.getStackTrace());
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
@@ -76,7 +76,6 @@ public class EmployeeController extends BaseController {
     @DeleteMapping(value = "/delete")
     public ResponseEntity<String> deleteEmployee(@RequestParam(name = "empId") String id){
         try {
-            System.out.println("ID" + id);
             employeeService.deleteEmployee(UUID.fromString(id));
         } catch (Exception e) {
             LOG.debug(e.getStackTrace());

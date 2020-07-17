@@ -5,9 +5,9 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Getter @Setter
+@Data
+@AllArgsConstructor
 @RequiredArgsConstructor
-@AllArgsConstructor @ToString
 public class EmployeeReqDto {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
