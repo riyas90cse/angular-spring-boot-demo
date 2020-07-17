@@ -21,7 +21,7 @@ export class ViewEmployeeComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 2
+      pageLength: 10
     };
     this.getAllEmployees();
   }
