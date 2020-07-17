@@ -35,7 +35,7 @@
             <td>{{ employee.salary }}</td>
             <td>
               <i class="fa fa-edit cursor-pointer" (click)="onRoute(true, employee.id)"></i> |
-              <i class="fa fa-trash cursor-pointer"></i>
+              <i class="fa fa-trash cursor-pointer" (click)="deleteEmployee(employee.id)"></i>
             </td>
           </tr>
           </tbody>

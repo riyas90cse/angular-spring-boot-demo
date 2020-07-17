@@ -55,4 +55,17 @@ export class ViewEmployeeComponent implements OnDestroy, OnInit {
       console.log('Get All Users', employees);
     });
   }
+
+  // Delete Employee
+  deleteEmployee(id) {
+    if (window.confirm('Are you sure, you want to delete?')) {
+      this.employeeService.delete(id).pipe(map(res => {
+        console.log(res);
+      })).subscribe( result => {
+        this.getAllEmployees();
+        this.router.navigate(['/employee/view']).then(r => {});
+      });
+    }
+  }
+
 }

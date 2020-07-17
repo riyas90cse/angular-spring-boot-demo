@@ -73,8 +73,8 @@ public class EmployeeController extends BaseController {
         }
     }
 
-    @DeleteMapping(value = "/delete")
-    public ResponseEntity<String> deleteEmployee(@RequestParam(name = "empId") String id){
+    @DeleteMapping(value = "/delete/{empId}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable("empId") String id){
         try {
             employeeService.deleteEmployee(UUID.fromString(id));
         } catch (Exception e) {

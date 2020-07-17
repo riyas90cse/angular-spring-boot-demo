@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {IEmployee} from "../_interface/employee";
@@ -19,13 +19,6 @@ export class EmployeeService {
 
   constructor(private httpClient: HttpClient) { }
 
-  create(employee): Observable<IEmployee> {
-    return this.httpClient.post<IEmployee>(environment.apiUrl + '/employee/save', JSON.stringify(employee), this.httpOptions)
-      .pipe(
-        catchError(this.errorHandler)
-      )
-  }
-
   getById(empId): Observable<IEmployee> {
     return this.httpClient.get<IEmployee>(environment.apiUrl + '/employee/' + empId)
       .pipe(
@@ -40,6 +33,13 @@ export class EmployeeService {
       )
   }
 
+  create(employee): Observable<IEmployee> {
+    return this.httpClient.post<IEmployee>(environment.apiUrl + '/employee/save', JSON.stringify(employee), this.httpOptions)
+      .pipe(
+        catchError(this.errorHandler)
+      )
+  }
+
   update(empId, employee): Observable<IEmployee> {
     return this.httpClient.put<IEmployee>(environment.apiUrl + '/employee/update', JSON.stringify(employee), this.httpOptions)
       .pipe(
@@ -48,7 +48,7 @@ export class EmployeeService {
   }
 
   delete(empId){
-    return this.httpClient.delete<IEmployee>(environment.apiUrl + '/employee/' + empId, this.httpOptions)
+    return this.httpClient.delete<IEmployee>(environment.apiUrl + '/employee/delete/' + empId)
       .pipe(
         catchError(this.errorHandler)
       )
