@@ -12,4 +12,7 @@ export class EditEmployeeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  back() {
+    window.history.back();
+  }
 }

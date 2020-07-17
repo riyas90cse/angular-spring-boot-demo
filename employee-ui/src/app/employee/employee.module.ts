@@ -7,6 +7,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {DataTablesModule} from "angular-datatables";
 import {HttpClientModule} from "@angular/common/http";
 import {EmployeeService} from "../_services/employee.service";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 const routes: Routes = [
   { path: '', redirectTo: 'view', pathMatch: 'full'},
@@ -32,8 +33,10 @@ const httpModules = [ HttpClientModule ];
     CommonModule,
     DataTablesModule,
     HttpClientModule,
+    FormsModule,
     ...httpModules,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ReactiveFormsModule
   ],
   providers: [
     EmployeeService
