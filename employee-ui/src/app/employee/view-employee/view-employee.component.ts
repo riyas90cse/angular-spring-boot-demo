@@ -1,9 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject} from "rxjs";
 import {IEmployee} from "../../_interface/employee";
 import {EmployeeService} from "../../_services/employee.service";
 import {map} from "rxjs/operators";
 import {ActivatedRoute, Router} from "@angular/router";
+import {DataTableDirective} from "angular-datatables";
 
 @Component({
   selector: 'app-view-employee',
@@ -13,12 +14,17 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class ViewEmployeeComponent implements OnDestroy, OnInit {
 
   isModify: boolean;
-  employees : IEmployee []
+  employees : IEmployee [];
+  @ViewChild(DataTableDirective, {static: false})
+  dtElement: DataTableDirective;
+  isDtInitialized: boolean = false;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   public empId = this.actRoute.snapshot.params[ 'empId' ];
 
-  constructor(private router: Router, public actRoute: ActivatedRoute, private employeeService: EmployeeService) { }
+  constructor(private router: Router, public actRoute: ActivatedRoute, private employeeService: EmployeeService) {
+
+  }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -51,7 +57,15 @@ export class ViewEmployeeComponent implements OnDestroy, OnInit {
       return data;
     })).subscribe((employees) => {
       this.employees = employees;
-      this.dtTrigger.next();
+      if (this.isDtInitialized) {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+          this.dtTrigger.next();
+        });
+      } else {
+        this.isDtInitialized = true
+        this.dtTrigger.next();
+      }
       console.log('Get All Users', employees);
     });
   }
@@ -59,12 +73,11 @@ export class ViewEmployeeComponent implements OnDestroy, OnInit {
   // Delete Employee
   deleteEmployee(id) {
     if (window.confirm('Are you sure, you want to delete?')) {
-      this.employeeService.delete(id).pipe(map(res => {
-        console.log(res);
-      })).subscribe( result => {
+      this.employeeService.delete(id).subscribe( response => {
         this.getAllEmployees();
-        this.router.navigate(['/employee/view']).then(r => {});
-      });
+        //this.router.navigate(['/employee/view']).then(r => {});
+      },
+      error => console.log(error));
     }
   }
 

@@ -47,11 +47,8 @@ export class EmployeeService {
       )
   }
 
-  delete(empId){
-    return this.httpClient.delete<IEmployee>(environment.apiUrl + '/employee/delete/' + empId)
-      .pipe(
-        catchError(this.errorHandler)
-      )
+  delete(empId): Observable<any>{
+    return this.httpClient.delete(environment.apiUrl + '/employee/delete/' + empId, { responseType: 'text' });
   }
 
   errorHandler(error) {

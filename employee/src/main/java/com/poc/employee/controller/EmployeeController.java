@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import java.util.Map;
+import java.util.HashMap;
+
 @RestController
 @RequestMapping("/api/employee")
 public class EmployeeController extends BaseController {
@@ -74,14 +77,18 @@ public class EmployeeController extends BaseController {
     }
 
     @DeleteMapping(value = "/delete/{empId}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable("empId") String id){
+    public Map<String, Boolean> deleteEmployee(@PathVariable("empId") String id){
+        Map<String, Boolean> response = new HashMap<>();
         try {
             employeeService.deleteEmployee(UUID.fromString(id));
         } catch (Exception e) {
             LOG.debug(e.getStackTrace());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            LOG.debug(e.getMessage());
+            response.put("error", Boolean.TRUE);
+            return response;
         }
-        return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
+        response.put("deleted", Boolean.TRUE);
+        return response;
     }
 
 }
